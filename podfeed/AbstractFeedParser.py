@@ -22,7 +22,8 @@ class AbstractFeedParser:
 
         if updated >= date:
           try:
-            filename = "./{0}_{1}.mp3".format(self.name, floor(updated))
+            filename = "{0}/{1}_{2}.mp3".format(
+              directory, self.name, floor(updated))
 
             mp3_link = self.getMp3Link(entry)
             with urlopen(mp3_link) as response:
