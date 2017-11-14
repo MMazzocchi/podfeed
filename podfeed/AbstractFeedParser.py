@@ -4,6 +4,8 @@ from urllib.request import urlopen
 from math import floor
 
 class AbstractFeedParser:
+  CHUNK_SIZE = 32*1024
+
   def __init__(self, name, url):
     self.name = name
     self.url = url
@@ -45,10 +47,10 @@ class AbstractFeedParser:
     with open(filename, "wb") as outfile:
       print("Writing {0}...".format(filename))
 
-      chunk = response.read(16 * 1024)
+      chunk = response.read(self.CHUNK_SIZE)
       while chunk:
         outfile.write(chunk)
-        chunk = response.read(16 * 1024)                
+        chunk = response.read(self.CHUNK_SIZE)                
 
   def getMp3Link(self, entry):
     raise NotImplementedError("AbstractFeedParser.getMp3Link() "+
