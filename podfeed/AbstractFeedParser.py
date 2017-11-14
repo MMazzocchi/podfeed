@@ -8,7 +8,7 @@ class AbstractFeedParser:
     self.name = name
     self.url = url
 
-  def getEpisodesSince(self, date):
+  def saveNewEpisodes(self, date, directory):
     data = feedparser.parse(self.url)
 
     if data['bozo'] == 1:
