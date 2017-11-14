@@ -1,6 +1,3 @@
-from urllib.request import urlopen
-import re
-
 from .AbstractFeedParser import AbstractFeedParser
 
 class IntelligenceMattersParser(AbstractFeedParser):
