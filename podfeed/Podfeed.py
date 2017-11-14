@@ -9,11 +9,11 @@ class Podfeed:
   def addParser(self, parser):
     self.parsers.append(parser)
 
-  def collectNewEpisodes(self, temp_dir):
+  def collectNewEpisodes(self, directory):
     date = self.getDate() 
 
     for parser in self.parsers:
-      parser.saveNewEpisodes(date, temp_dir)
+      parser.saveNewEpisodes(date, directory)
 
   def getDate(self):
     timestamp = time()
