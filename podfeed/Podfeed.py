@@ -3,18 +3,17 @@ from time import time, localtime
 class Podfeed:
   SECONDS_PER_DAY = 24*60*60
 
-  def __init__(self, temp_dir):
+  def __init__(self):
     self.parsers = []
-    self.temp_dir = temp_dir
 
   def addParser(self, parser):
     self.parsers.append(parser)
 
-  def collectNewEpisodes(self):
+  def collectNewEpisodes(self, temp_dir):
     date = self.getDate() 
 
     for parser in self.parsers:
-      parser.saveNewEpisodes(date, self.temp_dir)
+      parser.saveNewEpisodes(date, temp_dir)
 
   def getDate(self):
     timestamp = time()
