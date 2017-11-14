@@ -1,7 +1,7 @@
 from .CrookedParser import CrookedParser
 
 class LovettOrLeaveItParser(CrookedParser):
-  NAME = "LovettOrLeaveIt"
+  NAME = "lovett_or_leave_it"
   URL = "http://feeds.feedburner.com/lovett-or-leave-it"
 
   def __init__(self):
