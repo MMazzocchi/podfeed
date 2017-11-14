@@ -1,17 +1,26 @@
-import feedparser
+from time import time, localtime
 
 class Podfeed:
-  def __init__(self):
-    self.urls = []
+  SECONDS_PER_DAY = 24*60*60
 
-  def addUrl(self, url):
-    self.urls.append(url)
+  def __init__(self, temp_dir):
+    self.parsers = []
+    self.temp_dir = temp_dir
 
-  def addUrls(self, urls):
-    self.urls.extend(urls)
+  def addParser(self, parser):
+    self.parsers.append(parser)
 
-  def clearUrls(self):
-    self.urls.clear()
+  def collectNewEpisodes(self):
+    date = self.getDate() 
 
-  def getFilesSince(self, date):
-    pass 
+    for parser in self.parsers:
+      parser.saveNewEpisodes(date, self.temp_dir)
+
+  def getDate(self):
+    timestamp = time()
+    time_tuple = localtime(timestamp)
+
+    if(time_tuple.tm_wday == 0): # Monday
+      return timestamp - (3 * self.SECONDS_PER_DAY)
+    else:
+      return timestamp - self.SECONDS_PER_DAY
