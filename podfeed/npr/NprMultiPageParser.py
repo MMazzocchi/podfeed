@@ -1,5 +1,7 @@
 from urllib.request import urlopen
 import re
+from logging import getLogger
+LOGGER = getLogger("podfeed.NprMultiPageParser")
 
 from ..AbstractFeedParser import AbstractFeedParser
 
@@ -14,6 +16,8 @@ class NprMultiPageParser(AbstractFeedParser):
   def getMp3Link(self, entry):
     page_link = entry['link']
     mp3_link = None
+
+    LOGGER.info("Retrieving page: {0}".format(page_link))
 
     with urlopen(page_link) as page:
       for line in page:

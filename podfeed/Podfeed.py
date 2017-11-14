@@ -1,4 +1,6 @@
 from time import time, localtime
+from logging import getLogger
+LOGGER = getLogger("podfeed")
 
 class Podfeed:
   SECONDS_PER_DAY = 24*60*60
@@ -10,7 +12,10 @@ class Podfeed:
     self.parsers.append(parser)
 
   def collectNewEpisodes(self, directory):
-    date = self.getDate() 
+    date = self.getDate()
+
+    LOGGER.info("Collecting episodes posted after {0}, saving to directory {1}"
+      .format(date, directory))
 
     for parser in self.parsers:
       parser.saveNewEpisodes(date, directory)
