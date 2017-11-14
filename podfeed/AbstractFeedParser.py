@@ -32,6 +32,7 @@ class AbstractFeedParser:
                 chunk = response.read(16 * 1024)
                 while chunk:
                   outfile.write(chunk)
+                  chunk = response.read(16 * 1024)                
 
           except Exception as e:
             print("An error occured while parsing an entry. This entry "+
