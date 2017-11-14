@@ -1,5 +1,7 @@
 import feedparser
 from time import gmtime, time, mktime
+from urllib.request import urlopen
+from math import floor
 
 class AbstractFeedParser:
   def __init__(self, name, url):
@@ -20,13 +22,21 @@ class AbstractFeedParser:
 
         if updated >= date:
           try:
-            with self.getMp3File(entry) as mp3_file:
-              pass
+            filename = "./{0}_{1}.mp3".format(self.name, floor(updated))
+
+            mp3_link = self.getMp3Link(entry)
+            with urlopen(mp3_link) as response:
+              with open(filename, "wb") as outfile:
+                print("Writing {0}...".format(filename))
+
+                chunk = response.read(16 * 1024)
+                while chunk:
+                  outfile.write(chunk)
 
           except Exception as e:
             print("An error occured while parsing an entry. This entry "+
               "will be ignored: {0}".format(e))
 
-  def getMp3File(self, entry):
-    raise NotImplementedError("AbstractFeedParser.getMp3File() "+
+  def getMp3Link(self, entry):
+    raise NotImplementedError("AbstractFeedParser.getMp3Link() "+
       "should be overriden for parent classes!")

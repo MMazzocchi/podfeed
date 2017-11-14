@@ -13,7 +13,7 @@ class HiddenBrainParser(AbstractFeedParser):
 
     self.mp3_regex = re.compile(self.MP3_REGEX_STR)
 
-  def getMp3File(self, entry):
+  def getMp3Link(self, entry):
     page_link = entry['link']
     mp3_link = None
 
@@ -25,7 +25,7 @@ class HiddenBrainParser(AbstractFeedParser):
           mp3_link = results.group(0)
 
     if mp3_link:
-      return urlopen(mp3_link)
+      return mp3_link
 
     else:
       raise Exception("Could not find MP3 link!")
