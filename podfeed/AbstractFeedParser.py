@@ -2,7 +2,8 @@ import feedparser
 from time import gmtime, time, mktime
 
 class AbstractFeedParser:
-  def __init__(self, url):
+  def __init__(self, name, url):
+    self.name = name
     self.url = url
 
   def getEpisodesSince(self, date):
@@ -19,7 +20,8 @@ class AbstractFeedParser:
 
         if updated >= date:
           try:
-            mp3_file = self.getMp3File(entry)
+            with self.getMp3File(entry) as mp3_file:
+              pass
 
           except Exception as e:
             print("An error occured while parsing an entry. This entry "+

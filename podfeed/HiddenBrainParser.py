@@ -4,11 +4,13 @@ import re
 from .AbstractFeedParser import AbstractFeedParser
 
 class HiddenBrainParser(AbstractFeedParser):
+  NAME = "hidden_brain"
   URL = "https://www.npr.org/rss/rss.php?id=423302056"
   MP3_REGEX_STR = "(https://.*mp3)"
 
   def __init__(self):
-    AbstractFeedParser.__init__(self, self.URL)
+    AbstractFeedParser.__init__(self, self.NAME, self.URL)
+
     self.mp3_regex = re.compile(self.MP3_REGEX_STR)
 
   def getMp3File(self, entry):
