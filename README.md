@@ -16,4 +16,4 @@ podfeed.collectNewEpisodes("./episodes")
 ```
 
 ## Logging
-`podfeed` uses the built-in python [logging module](https://docs.python.org/3/library/logging.html), using loggers with the to-level name `podfeed`. Add a handler to see logging output.
+`podfeed` uses the built-in python [logging module](https://docs.python.org/3/library/logging.html), using loggers with the top-level name `podfeed`.
