@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 import re
 
-from .AbstractFeedParser import AbstractFeedParser
+from ..AbstractFeedParser import AbstractFeedParser
 
 class WaitWaitDontTellMeParser(AbstractFeedParser):
   NAME = "wait_wait_dont_tell_me"

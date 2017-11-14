@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 import re
 
-from .AbstractFeedParser import AbstractFeedParser
+from ..AbstractFeedParser import AbstractFeedParser
 
 class HiddenBrainParser(AbstractFeedParser):
   NAME = "hidden_brain"
