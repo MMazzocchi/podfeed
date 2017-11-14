@@ -1,6 +1,6 @@
 import feedparser
 
-class Reader:
+class Podfeed:
   def __init__(self):
     self.urls = []
 
