@@ -4,12 +4,11 @@ from urllib.request import urlopen
 from math import floor
 
 class AbstractFeedParser:
-  def __init__(self, name, url, directory):
+  def __init__(self, name, url):
     self.name = name
     self.url = url
-    self.directory = directory
 
-  def saveNewEpisodes(self, date):
+  def saveNewEpisodes(self, date, directory):
     data = feedparser.parse(self.url)
 
     if data['bozo'] == 1:
@@ -20,14 +19,14 @@ class AbstractFeedParser:
 
       for entry in entries:
         if self.isNewEntry(entry, date):
-          self.processEntry(entry)
+          self.processEntry(entry, directory)
 
   def isNewEntry(self, entry, date):
     updated = mktime(entry['updated_parsed'])
     return updated >= date
 
-  def processEntry(self, entry):
-    filename = self.makeFilename(entry)
+  def processEntry(self, entry, directory):
+    filename = self.makeFilename(entry, directory)
 
     try:
       mp3_link = self.getMp3Link(entry)
@@ -38,9 +37,9 @@ class AbstractFeedParser:
       print("An error occured while parsing an entry. This entry "+
         "will be ignored: {0}".format(e))
 
-  def makeFilename(self, entry):
+  def makeFilename(self, entry, directory):
     time = floor(mktime(entry['updated_parsed']))
-    return "{0}/{1}_{2}.mp3".format(self.directory, self.name, time)
+    return "{0}/{1}_{2}.mp3".format(directory, self.name, time)
 
   def writeResponseToFile(self, response, filename):
     with open(filename, "wb") as outfile:

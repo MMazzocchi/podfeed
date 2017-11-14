@@ -8,8 +8,8 @@ class HiddenBrainParser(AbstractFeedParser):
   URL = "https://www.npr.org/rss/rss.php?id=423302056"
   MP3_REGEX_STR = "(https://.*mp3)"
 
-  def __init__(self, directory):
-    AbstractFeedParser.__init__(self, self.NAME, self.URL, directory)
+  def __init__(self):
+    AbstractFeedParser.__init__(self, self.NAME, self.URL)
 
     self.mp3_regex = re.compile(self.MP3_REGEX_STR)
 
