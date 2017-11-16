@@ -33,3 +33,14 @@ class LifeOfTheLawParser(FeedBurnerParser):
 
   def __init__(self):
     FeedBurnerParser.__init__(self, self.NAME, self.URL)
+
+class GeointerestingParser(AbstractFeedParser):
+  ''' Parser for the Geointeresting podcast '''
+  NAME = "geointeresting"
+  URL = "http://feeds.soundcloud.com/users/soundcloud:users:149471698/sounds.rss"
+
+  def __init__(self):
+    FeedBurnerParser.__init__(self, self.NAME, self.URL)
+
+  def getMp3Link(self, entry):
+    return entry.links[1].href
