@@ -2,6 +2,7 @@
     category. '''
 
 from .AbstractFeedParser import AbstractFeedParser
+from .FeedBurnerParser import FeedBurnerParser
 
 class IntelligenceMattersParser(AbstractFeedParser):
   ''' Parser for the Intelligence Matters podcast. '''
@@ -24,3 +25,11 @@ class AndThatsWhyWeDrinkParser(AbstractFeedParser):
 
   def getMp3Link(self, entry):
     return entry.media_content[0]['url']
+
+class LifeOfTheLawParser(FeedBurnerParser):
+  ''' Parser for the Life of the Law podcast '''
+  NAME = "life_of_the_law"
+  URL = "http://feeds.feedburner.com/LifeOfTheLaw"
+
+  def __init__(self):
+    FeedBurnerParser.__init__(self, self.NAME, self.URL)
