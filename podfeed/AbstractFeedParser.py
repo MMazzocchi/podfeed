@@ -23,7 +23,7 @@ class AbstractFeedParser:
 
     data = feedparser.parse(self.url)
 
-    if data['bozo'] == 1:
+    if self.isValidData(data) == False:
      raise data['bozo_exception']
  
     else:
@@ -46,6 +46,25 @@ class AbstractFeedParser:
     ''' Return true if this entry was updated after the given date. '''
     updated = mktime(entry['updated_parsed'])
     return updated >= date
+
+  def isValidData(self, data):
+    ''' Return true if this data is valid (well-formed) '''
+    valid = True
+
+    if(data['bozo'] == 1):
+      exception = data['bozo_exception']
+
+      # CharacterEncodingOverride indicates there was a mismatch between the
+      # encoding specified in the HTTP header, and the encoding specified in the
+      # XML. This is actually fine; feedparser can handle it regardless.
+      if(isinstance(exception, feedparser.CharacterEncodingOverride)):
+        LOGGER.warn("{0} parser returned inconsistently encoded data".format(
+          self.name))
+
+      else:
+        valid = False 
+
+    return valid
 
   def processEntry(self, entry, directory):
     ''' Process this entry and download an MP3 (if available) into the given
