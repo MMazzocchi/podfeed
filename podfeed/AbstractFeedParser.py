@@ -71,6 +71,9 @@ class AbstractFeedParser:
         outfile.write(chunk)
         chunk = response.read(self.CHUNK_SIZE)                
 
+  def getName(self):
+    return self.name
+
   def getMp3Link(self, entry):
     ''' Extract a link to an MP3 file from this entry.
         This method should be overwritten by all child classes. '''

@@ -23,7 +23,10 @@ class Podfeed:
       .format(date, directory))
 
     for parser in self.parsers:
-      parser.saveNewEpisodes(date, directory)
+      try:
+        parser.saveNewEpisodes(date, directory)
+      except Exception as e:
+        LOGGER.warn("{0} parser failed: {1}".format(parser.getName(), e))
 
   def getDate(self):
     ''' Get the threshold for new episodes. On Tuesday through Friday, this is
