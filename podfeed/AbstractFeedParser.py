@@ -43,9 +43,9 @@ class AbstractFeedParser:
       LOGGER.info("Processed {0} entries".format(processed))
 
   def isNewEntry(self, entry, date):
-    ''' Return true if this entry was updated after the given date. '''
-    updated = mktime(entry['updated_parsed'])
-    return updated >= date
+    ''' Return true if this entry was published after the given date. '''
+    published = mktime(entry['published_parsed'])
+    return published >= date
 
   def isValidData(self, data):
     ''' Return true if this data is valid (well-formed) '''
