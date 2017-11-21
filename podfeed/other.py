@@ -79,3 +79,14 @@ class MythsAndLegendsParser(AbstractFeedParser):
 
   def getMp3Link(self, entry):
     return entry.links[0].href
+
+class IrlParser(AbstractFeedParser):
+  ''' Parser for the IRL podcast by Mozilla '''
+  NAME = "irl"
+  URL = "https://feeds.mozilla-podcasts.org/irl"
+
+  def __init__(self):
+    AbstractFeedParser.__init__(self, self.NAME, self.URL)
+
+  def getMp3Link(self, entry):
+    return entry.links[1].href
