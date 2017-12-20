@@ -73,4 +73,4 @@ class KeepItParser(FeedBurnerParser):
   URL = "http://feeds.feedburner.com/keep-it"
 
   def __init__(self):
-    KeepItParser.__init__(self, self.NAME, self.URL)
+    FeedBurnerParser.__init__(self, self.NAME, self.URL)
