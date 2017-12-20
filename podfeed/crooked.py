@@ -65,3 +65,12 @@ class WithFriendsLikeTheseParser(FeedBurnerParser):
 
   def __init__(self):
     FeedBurnerParser.__init__(self, self.NAME, self.URL)
+
+class KeepItParser(FeedBurnerParser):
+  ''' Parser for the Keep It podcast. '''
+
+  NAME = "keep_it"
+  URL = "http://feeds.feedburner.com/keep-it"
+
+  def __init__(self):
+    KeepItParser.__init__(self, self.NAME, self.URL)
