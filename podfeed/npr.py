@@ -41,7 +41,7 @@ class NprMultiPageParser(AbstractFeedParser):
     page_link = entry['link']
     mp3_link = None
 
-    self.LOGGER.info("Retrieving page: {0}".format(page_link))
+    self.LOGGER.debug("Retrieving page: {0}".format(page_link))
 
     with urlopen(page_link) as page:
       for line in page:

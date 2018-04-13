@@ -19,7 +19,7 @@ class AbstractFeedParser:
 
   def saveNewEpisodes(self, date, directory):
     ''' Gather new episodes for this feed. '''
-    LOGGER.info("Running {0} parser...".format(self.name))
+    LOGGER.debug("Running {0} parser...".format(self.name))
 
     data = feedparser.parse(self.url)
 
@@ -40,7 +40,7 @@ class AbstractFeedParser:
             LOGGER.warn("An error occured while parsing an entry. This entry "+
               "will be ignored: {0}".format(e))
 
-      LOGGER.info("Processed {0} entries".format(processed))
+      LOGGER.debug("Processed {0} entries".format(processed))
 
   def isNewEntry(self, entry, date):
     ''' Return true if this entry was published after the given date. '''
