@@ -11,4 +11,7 @@ class Playlist:
     self.episodes.extend(episodes)
 
   def saveAsM3U(self, path):
-    with 
+    with open(path, 'w') as outfile:
+      for episode in self.episodes:
+        outfile.write(episode.getLink())
+        outfile.write("\n")
