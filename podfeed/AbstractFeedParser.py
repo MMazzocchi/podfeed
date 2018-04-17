@@ -2,6 +2,7 @@ import feedparser
 from time import gmtime, time, mktime
 from urllib.request import urlopen
 from math import floor
+from os.path import join
 from logging import getLogger
 LOGGER = getLogger('podfeed')
 
@@ -16,15 +17,19 @@ class Episode:
     self.link = link
 
   def download(self):
-    ''' Download this episode and return it as a file-link object '''
-    return urlopen(mp3_link)
+    ''' Download this episode and return it as a file-like object '''
+    return urlopen(self.link)
 
-  def save(self, filename):
+  def save(self, path):
     ''' Download this episode and write it to the specified location '''
+
+    filename = "{0}_{1}.mp3".format(self.title, self.date)
+    fullpath = join(path, filename)
+
     with self.download() as response:
-      with open(filename, "wb") as outfile:
+      with open(fullpath, "wb") as outfile:
         try:
-          LOGGER.info("Writing {0}...".format(filename))
+          LOGGER.info("Writing {0}...".format(fullpath))
 
           chunk = response.read(self.CHUNK_SIZE)
           while chunk:
