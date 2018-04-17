@@ -5,6 +5,44 @@ from math import floor
 from logging import getLogger
 LOGGER = getLogger('podfeed')
 
+class Episode:
+  ''' Episode represents a single entry in the RSS feed containing a link. '''
+
+  CHUNK_SIZE = 32*1024
+
+  def __init__(self, title, date, link):
+    self.title = title
+    self.date = date
+    self.link = link
+
+  def download(self):
+    ''' Download this episode and return it as a file-link object '''
+    return urlopen(mp3_link)
+
+  def save(self, filename):
+    ''' Download this episode and write it to the specified location '''
+    with self.download() as response:
+      with open(filename, "wb") as outfile:
+        try:
+          LOGGER.info("Writing {0}...".format(filename))
+
+          chunk = response.read(self.CHUNK_SIZE)
+          while chunk:
+            outfile.write(chunk)
+            chunk = response.read(self.CHUNK_SIZE)                
+
+        except Exception as err:
+          LOGGER.error("Could not write file: {0}".format(err))
+
+  def getLink(self):
+    return self.link
+
+  def getTitle(self):
+    return self.title
+
+  def getDate(self):
+    return self.date
+
 class AbstractFeedParser:
   ''' AbstractFeedParser is a base class used to parse an RSS feed and identify,
       extract, and download MP3 files from it.
