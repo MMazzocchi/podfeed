@@ -55,6 +55,50 @@ class AbstractFeedParser:
     self.name = name
     self.url = url
 
+  def getNewEpisodes(self, date):
+    ''' Gather new episodes for this feed. '''
+    LOGGER.debug("Running {0} parser".format(self.name))
+
+    data = feedparser.parse(self.url)
+
+    if self.isValidData(data) == False:
+      raise data['bozo_exception']
+ 
+    else:
+      entries = data['entries']
+      episodes = []
+
+      for entry in entries:
+        if self.isNewEntry(entry, date):
+          try:
+            episode = self.makeEpisode(entry)            
+            episodes.append(episode)
+
+          except Exception as e:
+            LOGGER.warn("An error occured while parsing an entry. This entry "+
+              "will be ignored: {0}".format(e))
+
+      LOGGER.debug("Processed {0} entries".format(len(episodes)))
+      return episodes
+
+  def makeEpisode(self, entry):
+    ''' Create an Episode object for this entry '''
+    time = floor(mktime(entry['updated_parsed']))
+    link = self.getMp3Link(entry)
+
+    episode = Episode(self.name, time, link)
+    return episode
+
+  def writeResponseToFile(self, response, filename):
+    ''' Write this response object to the given filename. '''
+    with open(filename, "wb") as outfile:
+      LOGGER.info("Writing {0}...".format(filename))
+
+      chunk = response.read(self.CHUNK_SIZE)
+      while chunk:
+        outfile.write(chunk)
+        chunk = response.read(self.CHUNK_SIZE)                
+
   def saveNewEpisodes(self, date, directory):
     ''' Gather new episodes for this feed. '''
     LOGGER.debug("Running {0} parser...".format(self.name))
