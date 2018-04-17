@@ -17,27 +17,29 @@ class Episode:
     self.link = link
 
   def download(self):
-    ''' Download this episode and return it as a file-like object '''
+    ''' Download this episode and return it as a request object '''
     return urlopen(self.link)
 
-  def save(self, path):
-    ''' Download this episode and write it to the specified location '''
-
-    filename = "{0}_{1}.mp3".format(self.title, self.date)
-    fullpath = join(path, filename)
+  def write(self, file_obj):
+    ''' Download this episode and write it to the specified object '''
 
     with self.download() as response:
-      with open(fullpath, "wb") as outfile:
-        try:
-          LOGGER.info("Writing {0}...".format(fullpath))
+      try:
+        LOGGER.info("Writing {0}...".format(fullpath))
 
+        chunk = response.read(self.CHUNK_SIZE)
+        while chunk:
+          file_obj.write(chunk)
           chunk = response.read(self.CHUNK_SIZE)
-          while chunk:
-            outfile.write(chunk)
-            chunk = response.read(self.CHUNK_SIZE)                
 
-        except Exception as err:
-          LOGGER.error("Could not write file: {0}".format(err))
+      except Exception as err:
+        LOGGER.error("Could not write file: {0}".format(err))
+
+  def writeFile(self, path):
+    ''' Download this episode and write it to the specified filename '''
+    with self.download() as response:
+      with open(path, 'wb') as outfile:
+        self.write(outfile)
 
   def getLink(self):
     return self.link
