@@ -1,8 +1,7 @@
 import feedparser
-from time import gmtime, time, mktime
+from time import mktime
 from urllib.request import urlopen
 from math import floor
-from os.path import join
 from logging import getLogger
 LOGGER = getLogger('podfeed')
 
