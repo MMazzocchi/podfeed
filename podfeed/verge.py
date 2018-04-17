@@ -1,6 +1,6 @@
 ''' Module containing parser classes for podcasts published by The Verge '''
 
-from .FeedBurnerParser import FeedBurnerParser
+from .feedburner import FeedBurnerParser
 
 class WhydYouPushThatButtonParser(FeedBurnerParser):
   ''' Parser for the Why'd You Push That Button podcast. '''

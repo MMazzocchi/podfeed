@@ -1,7 +1,7 @@
 ''' Module containing parser classes for podcasts published by Crooked Media.
     '''
 
-from .FeedBurnerParser import FeedBurnerParser
+from .feedburner import FeedBurnerParser
 
 class CrookedConversationsParser(FeedBurnerParser):
   ''' Parser for the Crooked Conversations podcast. '''

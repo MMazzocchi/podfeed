@@ -2,7 +2,7 @@
     category. '''
 
 from .AbstractFeedParser import AbstractFeedParser
-from .FeedBurnerParser import FeedBurnerParser
+from .feedburner import FeedBurnerParser
 
 class IntelligenceMattersParser(AbstractFeedParser):
   ''' Parser for the Intelligence Matters podcast. '''
