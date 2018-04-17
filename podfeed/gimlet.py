@@ -55,3 +55,32 @@ class UncivilParser(GimletParser):
 
   def __init__(self):
     GimletParser.__init__(self, self.NAME, self.URL)
+
+class SandraParser(GimletParser):
+  ''' Parser for the Sandra podcast. '''
+
+  NAME = "sandra"
+  URL = "http://feeds.gimletmedia.com/sandrashow"
+
+  def __init__(self):
+    GimletParser.__init__(self, self.NAME, self.URL)
+
+class TheHabitatParser(GimletParser):
+  ''' Parser for The Habitat podcast. '''
+
+  NAME = "the_habitat"
+  URL = "http://feeds.gimletmedia.com/thehabitat"
+
+  def __init__(self):
+    GimletParser.__init__(self, self.NAME, self.URL)
+
+class WeCametoWinParser(GiletParser):
+  ''' Parser for the We Came To Win podcast. '''
+
+  NAME = "we_came_to_win"
+  URL = "http://feeds.gimletmedia.com/wecametowin"
+
+  def __init__(self):
+    GimletParser.__init__(self, self.NAME, self.URL)
+
+
