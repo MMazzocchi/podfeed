@@ -1,5 +1,5 @@
 ''' Module containing parsing classes for podcasts published by NASA. '''
-from .AbstractFeedParser import AbstractFeedParser
+from .parser import AbstractFeedParser
 
 class NasaParser(AbstractFeedParser):
   ''' Generic class for parsing NASA published podcasts. '''

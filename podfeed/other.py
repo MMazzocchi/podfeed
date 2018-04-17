@@ -1,7 +1,7 @@
 ''' Module containing parser classes for podcasts that don't fit into another
     category. '''
 
-from .AbstractFeedParser import AbstractFeedParser
+from .parser import AbstractFeedParser
 from .feedburner import FeedBurnerParser
 
 class IntelligenceMattersParser(AbstractFeedParser):
