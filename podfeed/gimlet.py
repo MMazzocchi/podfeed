@@ -74,7 +74,7 @@ class TheHabitatParser(GimletParser):
   def __init__(self):
     GimletParser.__init__(self, self.NAME, self.URL)
 
-class WeCametoWinParser(GiletParser):
+class WeCameToWinParser(GimletParser):
   ''' Parser for the We Came To Win podcast. '''
 
   NAME = "we_came_to_win"
