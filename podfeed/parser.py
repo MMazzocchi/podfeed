@@ -81,10 +81,10 @@ class AbstractFeedParser:
             episodes.append(episode)
 
           except Exception as e:
-            LOGGER.warn("An error occured while parsing an entry. This entry "+
-              "will be ignored: {0}".format(e))
+            LOGGER.warn("An error occured while parsing an entry for "+
+              "{0}. This entry will be ignored: {1}".format(self.name, e))
 
-      LOGGER.debug("Processed {0} entries".format(len(episodes)))
+      LOGGER.debug("Processed {0} entries for {1}".format(len(episodes), self.name))
       return episodes
 
   def makeEpisode(self, entry):
