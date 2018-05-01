@@ -1,7 +1,7 @@
 ''' Module containing parser classes for podcasts published by How Stuff Works
     '''
 
-from .parser import AbstractFeedParser
+from ..parser import AbstractFeedParser
 
 class HowStuffWorksParser(AbstractFeedParser):
   ''' Generic parser for podcasts published by How Stuff Works '''

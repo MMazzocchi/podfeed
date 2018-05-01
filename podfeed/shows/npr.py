@@ -4,7 +4,7 @@ from urllib.request import urlopen
 import re
 from logging import getLogger
 
-from .parser import AbstractFeedParser
+from ..parser import AbstractFeedParser
 
 class WaitWaitDontTellMeParser(AbstractFeedParser):
   ''' Parser for the Wait, Wait, Don't Tell Me podcast '''

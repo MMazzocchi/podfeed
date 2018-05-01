@@ -1,4 +1,4 @@
-from .parser import AbstractFeedParser
+from ..parser import AbstractFeedParser
 
 class FeedBurnerParser(AbstractFeedParser):
   ''' Generic parser class for podcasts hosted by FeedBurner. '''

@@ -1,6 +1,6 @@
 ''' Module containing parsing classes for podcasts published by Gimlet Media '''
 
-from .parser import AbstractFeedParser
+from ..parser import AbstractFeedParser
 
 class GimletParser(AbstractFeedParser):
   ''' Generic parser for podcasts published by Gimlet Media. '''
