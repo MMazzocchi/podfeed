@@ -68,7 +68,9 @@ class AbstractFeedParser:
     data = feedparser.parse(self.url)
 
     if self.isValidData(data) == False:
-      raise data['bozo_exception']
+      LOGGER.warn(
+        "The {0} parser failed (data retrieved was invalid: {1})".format(
+        self.name, data))
  
     else:
       entries = data['entries']
@@ -102,22 +104,7 @@ class AbstractFeedParser:
 
   def isValidData(self, data):
     ''' Return true if this data is valid (well-formed) '''
-    valid = True
-
-    if(data['bozo'] == 1):
-      exception = data['bozo_exception']
-
-      # CharacterEncodingOverride indicates there was a mismatch between the
-      # encoding specified in the HTTP header, and the encoding specified in the
-      # XML. This is actually fine; feedparser can handle it regardless.
-      if(isinstance(exception, feedparser.CharacterEncodingOverride)):
-        LOGGER.warn("{0} parser returned inconsistently encoded data".format(
-          self.name))
-
-      else:
-        valid = False 
-
-    return valid
+    return 'entries' in data
 
   def getName(self):
     return self.name
