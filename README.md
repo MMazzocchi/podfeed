@@ -3,16 +3,18 @@
 
 ## Example Usage
 ```python
-from podfeed import Podfeed
-from podfeed.npr import PlanetMoneyParser
+from podfeed.showsnpr import PlanetMoneyParser
 
-podfeed = Podfeed()
+# Create a parser
+parser = PlanetMoneyParser()
 
-# Add the parser for Planet Money
-podfeed.addParser(PlanetMoneyParser())
+# Collect episodes published after May 1st, 2018 
+episodes = podfeed.getNewEpisodes(1525132800)
 
-# Collect any new episodes and place in the directory ./episodes
-podfeed.collectNewEpisodes("./episodes")
+# Write each to a file
+for episode in episodes:
+  episode.writeFile("./{0}_{1}.mp3".format(
+    episode.getTitle(), episode.getDate()))
 ```
 
 ## Logging
