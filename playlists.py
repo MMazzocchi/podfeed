@@ -13,5 +13,6 @@ class Playlist:
   def saveAsM3U(self, path):
     with open(path, 'w') as outfile:
       for episode in self.episodes:
+        outfile.write("# {0}\n".format(episode.getTitle())
         outfile.write(episode.getLink())
         outfile.write("\n")
