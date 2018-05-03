@@ -10,7 +10,7 @@ class HowStuffWorksParser(AbstractFeedParser):
     AbstractFeedParser.__init__(self, name, url)
 
   def getMp3Link(self, entry):
-    return entry.link
+    return entry.links[0].href
 
 class StuffYouShouldKnowParser(HowStuffWorksParser):
   ''' Parser for the Stuff You Should Know podcast '''

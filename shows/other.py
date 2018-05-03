@@ -13,7 +13,7 @@ class IntelligenceMattersParser(AbstractFeedParser):
     AbstractFeedParser.__init__(self, self.NAME, self.URL)
 
   def getMp3Link(self, entry):
-    return entry.links[1].href
+    return entry.links[0].href
 
 class AndThatsWhyWeDrinkParser(AbstractFeedParser):
   ''' Parser for the And That's Why We Drink podcast '''
@@ -53,13 +53,16 @@ class RevisionistHistoryParser(FeedBurnerParser):
   def __init__(self):
     FeedBurnerParser.__init__(self, self.NAME, self.URL)
 
-class FreakonomicsRadioParser(FeedBurnerParser):
+class FreakonomicsRadioParser(AbstractFeedParser):
   ''' Parser for the Freakonomics Radio podcast '''
   NAME = "freakonomics_radio"
   URL = "http://feeds.feedburner.com/freakonomicsradio"
 
   def __init__(self):
-    FeedBurnerParser.__init__(self, self.NAME, self.URL)
+    AbstractFeedParser.__init__(self, self.NAME, self.URL)
+
+  def getMp3Link(self, entry):
+    return entry.links[0].href
 
 class CriminalParser(FeedBurnerParser):
   ''' Parser for the Criminal podcast '''
@@ -89,4 +92,4 @@ class IrlParser(AbstractFeedParser):
     AbstractFeedParser.__init__(self, self.NAME, self.URL)
 
   def getMp3Link(self, entry):
-    return entry.links[1].href
+    return entry.links[0].href
