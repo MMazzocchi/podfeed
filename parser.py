@@ -65,57 +65,50 @@ class AbstractFeedParser:
       feed. '''
   CHUNK_SIZE = 32*1024
 
-  def __init__(self, name, url):
-    self.name = name
+  def __init__(self, url):
     self.url = url
 
   def getNewEpisodes(self, date):
     ''' Gather new episodes for this feed. '''
-    LOGGER.debug("Running {0} parser".format(self.name))
+    LOGGER.debug("Running {0} parser".format(self.url))
 
     data = feedparser.parse(self.url)
 
-    if self.isValidData(data) == False:
-      LOGGER.warn(
-        "The {0} parser failed (data retrieved was invalid: {1})".format(
-        self.name, data))
- 
-    else:
+    if ('feed' in data) and ('title' in data.feed) and ('entries' in data):
+      title = data.feed.title
+
       entries = data['entries']
       episodes = []
 
       for entry in entries:
         if self.isNewEntry(entry, date):
           try:
-            episode = self.makeEpisode(entry)            
+            episode = self.makeEpisode(title, entry)            
             episodes.append(episode)
 
           except Exception as e:
-            LOGGER.warn("An error occured while parsing an entry for "+
-              "{0}. This entry will be ignored: {1}".format(self.name, e))
+            LOGGER.warn("An error occured while parsing an entry from "+
+              "{0}. This entry will be ignored: {1}".format(self.url, e))
+    else:
+      LOGGER.error("The data returned from feed URL "+
+        "{0} was invalid: {1}".format(self.url, data))
 
-      LOGGER.debug("Processed {0} entries for {1}".format(len(episodes), self.name))
-      return episodes
+    LOGGER.debug("Processed {0} entries for {1}".format(
+      len(episodes), self.url))
+    return episodes
 
-  def makeEpisode(self, entry):
+  def makeEpisode(self, title, entry):
     ''' Create an Episode object for this entry '''
     time = floor(mktime(entry['updated_parsed']))
     link = self.getMp3Link(entry)
 
-    episode = Episode(self.name, time, link)
+    episode = Episode(title, time, link)
     return episode
 
   def isNewEntry(self, entry, date):
     ''' Return true if this entry was published after the given date. '''
     published = mktime(entry['published_parsed'])
     return published >= date
-
-  def isValidData(self, data):
-    ''' Return true if this data is valid (well-formed) '''
-    return 'entries' in data
-
-  def getName(self):
-    return self.name
 
   def getMp3Link(self, entry):
     ''' Extract a link to an MP3 file from this entry. By default, this method
