@@ -2,8 +2,16 @@ import feedparser
 from time import mktime
 from urllib.request import urlopen
 from math import floor
+from os.path import basename
+import re
 from logging import getLogger
 LOGGER = getLogger('podfeed')
+
+MP3_REGEX = re.compile(r'^.*\.mp3$')
+
+def validMp3Link(link):
+  filename = basename(link).split("?")[0]
+  return MP3_REGEX.match(filename)
 
 class Episode:
   ''' Episode represents a single entry in the RSS feed containing a link. '''
@@ -110,7 +118,16 @@ class AbstractFeedParser:
     return self.name
 
   def getMp3Link(self, entry):
-    ''' Extract a link to an MP3 file from this entry.
-        This method should be overwritten by all child classes. '''
-    raise NotImplementedError("AbstractFeedParser.getMp3Link() "+
-      "should be overriden for parent classes!")
+    ''' Extract a link to an MP3 file from this entry. By default, this method
+    searches the "links" section of an entry for one that looks like an MP3.
+    If none is found, returns None.
+
+    This method can be overwritten by child classes. '''
+    mp3_link = None
+
+    if ('links' in entry) and (len(entry.links) > 0):
+      for link in entry.links:
+        if ('href' in link) and validMp3Link(link.href):
+          mp3_link = link.href
+
+    return mp3_link
