@@ -3,15 +3,12 @@
 
 ## Example Usage
 ```python
-from podfeed.showsnpr import PlanetMoneyParser
-
-# Create a parser
-parser = PlanetMoneyParser()
+from podfeed.parser import parseFeed
 
 # Collect episodes published after May 1st, 2018 
-episodes = podfeed.getNewEpisodes(1525132800)
+episodes = parseFeed("https://www.npr.org/rss/podcast.php?id=510289", 1525132800)
 
-# Write each to a file
+# Write each episode to a file
 for episode in episodes:
   episode.writeFile("./{0}_{1}.mp3".format(
     episode.getTitle(), episode.getDate()))
