@@ -57,12 +57,11 @@ class Episode:
   def getDate(self):
     return self.date
 
-class AbstractFeedParser:
-  ''' AbstractFeedParser is a base class used to parse an RSS feed and identify,
-      extract, and download MP3 files from it.
-
-      AbstractFeedParser should be subclassed for a specific RSS feed or type of
-      feed. '''
+class StandardFeedParser:
+  ''' StandardFeedParser is a base class used to parse an RSS feed and identify,
+      extract, and download MP3 files from it. It will download a feed, parse
+      new entries from it, and return those entries packaged in Episode objects.
+  '''
   CHUNK_SIZE = 32*1024
 
   def __init__(self, url):
@@ -113,9 +112,7 @@ class AbstractFeedParser:
   def getMp3Link(self, entry):
     ''' Extract a link to an MP3 file from this entry. By default, this method
     searches the "links" section of an entry for one that looks like an MP3.
-    If none is found, returns None.
-
-    This method can be overwritten by child classes. '''
+    If none is found, returns None. '''
     mp3_link = None
 
     if ('links' in entry) and (len(entry.links) > 0):
