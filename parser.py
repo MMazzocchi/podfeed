@@ -10,12 +10,17 @@ LOGGER = getLogger('podfeed')
 MP3_REGEX = re.compile(r'^.*\.mp3$')
 
 def validMp3Link(link):
+  ''' Return true if the link appears to be a valid MP3 link. '''
   filename = basename(link).split("?")[0]
   return MP3_REGEX.match(filename)
 
-class Episode:
-  ''' Episode represents a single entry in the RSS feed containing a link. '''
+def isNewEntry(entry, date):
+  ''' Return true if this entry was published after the given date. '''
+  published = mktime(entry['published_parsed'])
+  return published >= date
 
+class Episode:
+  ''' Represents a single entry in the RSS feed containing a link. '''
   CHUNK_SIZE = 32*1024
 
   def __init__(self, title, date, link):
@@ -80,7 +85,7 @@ class StandardFeedParser:
       episodes = []
 
       for entry in entries:
-        if self.isNewEntry(entry, date):
+        if isNewEntry(entry, date):
           try:
             episode = self.makeEpisode(title, entry)            
             episodes.append(episode)
@@ -104,11 +109,6 @@ class StandardFeedParser:
     episode = Episode(title, time, link)
     return episode
 
-  def isNewEntry(self, entry, date):
-    ''' Return true if this entry was published after the given date. '''
-    published = mktime(entry['published_parsed'])
-    return published >= date
-
   def getMp3Link(self, entry):
     ''' Extract a link to an MP3 file from this entry. By default, this method
     searches the "links" section of an entry for one that looks like an MP3.
@@ -121,3 +121,10 @@ class StandardFeedParser:
           mp3_link = link.href
 
     return mp3_link
+
+def parseFeed(url, date, parser=StandardFeedParser):
+  ''' Parses the feed given by <url>, and returns episodes posted after <date>.
+      Uses <parser> to extract URLs from the entries; defaults to
+      StandardFeedParser. '''
+  p = parser(url)
+  return p.getNewEpisodes(date)
