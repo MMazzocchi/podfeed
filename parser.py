@@ -79,7 +79,7 @@ class StandardFeedParser:
     data = feedparser.parse(self.url)
 
     if ('feed' in data) and ('title' in data.feed) and ('entries' in data):
-      title = data.feed.title
+      title = re.sub("\W", "", data.feed.title)
 
       entries = data['entries']
       episodes = []
