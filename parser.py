@@ -74,7 +74,7 @@ class StandardFeedParser:
 
   def getNewEpisodes(self, date):
     ''' Gather new episodes for this feed. '''
-    LOGGER.debug("Running {0} parser".format(self.url))
+    LOGGER.debug("Running {0}".format(self.url))
 
     data = feedparser.parse(self.url)
     episodes = []
