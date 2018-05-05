@@ -1,5 +1,5 @@
 # podfeed
-`podfeed` is a python3 package that will read a list of RSS podcast feeds and download the latest ones into a directory.
+`podfeed` is a python3 package that will read an RSS feed for a podcast and provide episode-level utilties for download or playlist creation.
 
 ## Example Usage
 ```python
