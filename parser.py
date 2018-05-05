@@ -77,12 +77,11 @@ class StandardFeedParser:
     LOGGER.debug("Running {0} parser".format(self.url))
 
     data = feedparser.parse(self.url)
+    episodes = []
 
     if ('feed' in data) and ('title' in data.feed) and ('entries' in data):
       title = re.sub("\W", "", data.feed.title)
-
       entries = data['entries']
-      episodes = []
 
       for entry in entries:
         if isNewEntry(entry, date):
@@ -99,6 +98,7 @@ class StandardFeedParser:
 
     LOGGER.debug("Processed {0} entries for {1}".format(
       len(episodes), self.url))
+
     return episodes
 
   def makeEpisode(self, title, entry):
