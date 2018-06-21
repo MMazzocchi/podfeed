@@ -7,12 +7,12 @@ import re
 from logging import getLogger
 LOGGER = getLogger('podfeed')
 
-MP3_REGEX = re.compile(r'^.*\.mp3$')
+TRACK_REGEX = re.compile(r'^.*\.(mp3|wav|aif.?|flac|ogg|wma)$')
 
 def validMp3Link(link):
   ''' Return true if the link appears to be a valid MP3 link. '''
   filename = basename(link).split("?")[0]
-  return MP3_REGEX.match(filename)
+  return TRACK_REGEX.match(filename)
 
 def isNewEntry(entry, date):
   ''' Return true if this entry was published after the given date. '''
