@@ -27,6 +27,7 @@ class Episode:
     self.title = title
     self.date = date
     self.link = link
+    self.ext = link.split(".")[-1]
 
   def download(self):
     ''' Download this episode and return it as a request object '''
@@ -61,6 +62,9 @@ class Episode:
 
   def getDate(self):
     return self.date
+
+  def getExt(self):
+    return self.ext
 
 class StandardFeedParser:
   ''' StandardFeedParser is a base class used to parse an RSS feed and identify,
