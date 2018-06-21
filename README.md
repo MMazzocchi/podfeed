@@ -10,8 +10,8 @@ episodes = parseFeed("https://www.npr.org/rss/podcast.php?id=510289", 1525132800
 
 # Write each episode to a file
 for episode in episodes:
-  episode.writeFile("./{0}_{1}.mp3".format(
-    episode.getTitle(), episode.getDate()))
+  episode.writeFile("./{0}_{1}.{2}".format(
+    episode.getTitle(), episode.getDate(), episode.getExt()))
 ```
 
 ## Logging
