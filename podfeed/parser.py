@@ -1,7 +1,7 @@
 import feedparser
-from time import mktime
+import time
 from urllib.request import urlopen
-from math import floor
+import math
 from os.path import basename
 import re
 from logging import getLogger
@@ -16,7 +16,7 @@ def validTrackLink(link):
 
 def isNewEntry(entry, date):
   ''' Return true if this entry was published after the given date. '''
-  published = mktime(entry['published_parsed'])
+  published = time.mktime(entry['published_parsed'])
   return published >= date
 
 class Episode:
@@ -108,10 +108,10 @@ class StandardFeedParser:
 
   def makeEpisode(self, title, entry):
     ''' Create an Episode object for this entry '''
-    time = floor(mktime(entry['updated_parsed']))
+    published_time = math.floor(time.mktime(entry['published_parsed']))
     link = self.getTrackLink(entry)
 
-    episode = Episode(title, time, link)
+    episode = Episode(title, published_time, link)
     return episode
 
   def getTrackLink(self, entry):
