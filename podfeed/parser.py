@@ -95,7 +95,7 @@ class StandardFeedParser:
             episodes.append(episode)
 
           except Exception as e:
-            LOGGER.warn("An error occured while parsing an entry from "+
+            LOGGER.warning("An error occured while parsing an entry from "+
               "{0}. This entry will be ignored: {1}".format(self.url, e))
     else:
       LOGGER.error("The data returned from feed URL "+
