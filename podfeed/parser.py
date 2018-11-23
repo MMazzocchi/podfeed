@@ -111,8 +111,12 @@ class StandardFeedParser:
     published_time = math.floor(time.mktime(entry['published_parsed']))
     link = self.getTrackLink(entry)
 
-    episode = Episode(title, published_time, link)
-    return episode
+    if link != None:
+      episode = Episode(title, published_time, link)
+      return episode
+
+    else:
+      raise Exception("No link was found.")
 
   def getTrackLink(self, entry):
     ''' Extract a link to an MP3 file from this entry. By default, this method
