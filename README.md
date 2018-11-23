@@ -3,7 +3,7 @@
 
 ## Example Usage
 ```python
-from podfeed.parser import parseFeed
+from podfeed import parseFeed
 
 # Collect episodes published after May 1st, 2018 
 episodes = parseFeed("https://www.npr.org/rss/podcast.php?id=510289", 1525132800)
