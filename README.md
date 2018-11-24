@@ -14,5 +14,8 @@ for episode in episodes:
     episode.getTitle(), episode.getDate(), episode.getExt()))
 ```
 
+## Documentation
+[podfeed Documentation](https://mmazzocchi.github.io/podfeed/)
+
 ## Logging
 `podfeed` uses the built-in python [logging module](https://docs.python.org/3/library/logging.html), using loggers with the top-level name `podfeed`.
