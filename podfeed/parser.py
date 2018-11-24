@@ -1,7 +1,7 @@
 import feedparser
-from time import mktime
+import time
 from urllib.request import urlopen
-from math import floor
+import math
 from os.path import basename
 import re
 from logging import getLogger
@@ -16,7 +16,7 @@ def validTrackLink(link):
 
 def isNewEntry(entry, date):
   ''' Return true if this entry was published after the given date. '''
-  published = mktime(entry['published_parsed'])
+  published = time.mktime(entry['published_parsed'])
   return published >= date
 
 class Episode:
@@ -55,15 +55,19 @@ class Episode:
         self.write(outfile)
 
   def getLink(self):
+    ''' Return the link for this episode '''
     return self.link
 
   def getTitle(self):
+    ''' Return the title for this episode '''
     return self.title
 
   def getDate(self):
+    ''' Retrurn the publish date for this episode '''
     return self.date
 
   def getExt(self):
+    ''' Return the extension for this episode (ex: mp3) '''
     return self.ext
 
 class StandardFeedParser:
@@ -95,7 +99,7 @@ class StandardFeedParser:
             episodes.append(episode)
 
           except Exception as e:
-            LOGGER.warn("An error occured while parsing an entry from "+
+            LOGGER.warning("An error occured while parsing an entry from "+
               "{0}. This entry will be ignored: {1}".format(self.url, e))
     else:
       LOGGER.error("The data returned from feed URL "+
@@ -108,11 +112,15 @@ class StandardFeedParser:
 
   def makeEpisode(self, title, entry):
     ''' Create an Episode object for this entry '''
-    time = floor(mktime(entry['updated_parsed']))
+    published_time = math.floor(time.mktime(entry['published_parsed']))
     link = self.getTrackLink(entry)
 
-    episode = Episode(title, time, link)
-    return episode
+    if link != None:
+      episode = Episode(title, published_time, link)
+      return episode
+
+    else:
+      raise Exception("No link was found.")
 
   def getTrackLink(self, entry):
     ''' Extract a link to an MP3 file from this entry. By default, this method
