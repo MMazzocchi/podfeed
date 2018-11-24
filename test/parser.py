@@ -20,6 +20,7 @@ PORT = 8080
 URL = "http://localhost:{0}/test/data/".format(PORT)
 
 NOV_23 = time.mktime(time.strptime("Thu Nov 23 00:00:00 2018"))
+NOV_24 = time.mktime(time.strptime("Fri Nov 24 00:00:00 2018"))
 
 LOGGER = getLogger("podfeed")
 #LOGGER.addHandler(StreamHandler())
@@ -41,6 +42,11 @@ class FeedParserTests(unittest.TestCase):
     parser = StandardFeedParser(URL+"/valid")
     eps = parser.getNewEpisodes(NOV_23)
     self.assertIs(len(eps), 1)
+    episode = eps[0]
+    self.assertEqual(episode.getLink(), "http://localhost:8080/track1.mp3")
+    self.assertEqual(episode.getTitle(), "MyFeed")
+    self.assertEqual(episode.getDate(), NOV_24)
+
 
   def test_getNewEpisodesTooEarly(self):
     parser = StandardFeedParser(URL+"/too_early")
