@@ -1,0 +1,185 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Parsers &#8212; podfeed 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Episode Objects" href="episode.html" />
+    <link rel="prev" title="Quickstart" href="../usage/quickstart.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="parsers">
+<h1>Parsers<a class="headerlink" href="#parsers" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">StandardFeedParser</span></code> is the default parser used when calling
+<code class="docutils literal notranslate"><span class="pre">parseFeed</span></code>, and should be enough for most, if not all, RSS feeds.</p>
+<p>Upon parsing a feed, the <code class="docutils literal notranslate"><span class="pre">StandardFeedParser</span></code> does the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Downloads a feed served by the URL.</li>
+<li>Parses each entry, excluding those:</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Without a valid link (<a class="reference internal" href="#valid-links"><span class="std std-ref">Valid Links</span></a>)</li>
+<li>Published before the given timestamp</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>For each remaining entry, it creates an <code class="docutils literal notranslate"><span class="pre">Episode</span></code> object.</li>
+</ol>
+</div></blockquote>
+<p>On the rare occasion, a feed will be formatted in a way that doesn’t conform to
+the format <code class="docutils literal notranslate"><span class="pre">podfeed</span></code> expects. In this case, a custom parser can be created by
+subclassing the <code class="docutils literal notranslate"><span class="pre">StandardFeedParser</span></code>: <a class="reference internal" href="#custom-parsers"><span class="std std-ref">Custom Parsers</span></a></p>
+<div class="section" id="valid-links">
+<span id="id1"></span><h2>Valid Links<a class="headerlink" href="#valid-links" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="first sidebar-title">“links” section</p>
+<p class="last">Just because the RSS feed doesn’t have a literal “links” tag, doesn’t mean it
+won’t have any valid links. Often, links will be present in an “enclosure”
+tag, or under other names. The underlying
+<a class="reference external" href="https://github.com/kurtmckee/feedparser">feedparser</a> library usually finds
+these and places them into the “links” section.</p>
+</div>
+<p>In order for a link to be considered valid, it must meet the following
+requirements:</p>
+<ol class="arabic simple">
+<li>Must be present under a “links” section in the parsed feed entry.</li>
+<li>Must have an audio extension (mp3, wav, flac, etc.)</li>
+</ol>
+</div>
+<div class="section" id="custom-parsers">
+<span id="id2"></span><h2>Custom Parsers<a class="headerlink" href="#custom-parsers" title="Permalink to this headline">¶</a></h2>
+<p>By default, the standard parser looks for episode links under a “links” section.
+This may not always be the case, however. Links may end up in another section,
+or under another name. These feeds can still be parsed, but a custom parser is
+needed to find the link.</p>
+<p>To create a custom parser, subclass <code class="docutils literal notranslate"><span class="pre">StandardFeedParser</span></code> and override the
+<code class="docutils literal notranslate"><span class="pre">getTrackLink(self,</span> <span class="pre">entry)</span></code> method. In this method, <code class="docutils literal notranslate"><span class="pre">entry</span></code> will be a
+dictionary parsed from the feed. Once the link is found, it should be returned
+as a string. If no link is present, <code class="docutils literal notranslate"><span class="pre">None</span></code> should be returned.</p>
+<p>An example parser that retrieves a link under “urls” is below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">podfeed</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">CustomParser</span><span class="p">(</span><span class="n">StandardFeedParser</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">getMp3Link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;urls&quot;</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">urls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">entry</span><span class="o">.</span><span class="n">urls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">CustomParser</span><span class="p">()</span>
+<span class="n">eps</span> <span class="o">=</span> <span class="n">parseFeed</span><span class="p">(</span><span class="s2">&quot;https://mypodcast.com/rss/&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">,</span>
+                <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">podfeed</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#valid-links">Valid Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-parsers">Custom Parsers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="episode.html">Episode Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../playlists/playlists.html">Playlists</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../usage/quickstart.html" title="previous chapter">Quickstart</a></li>
+      <li>Next: <a href="episode.html" title="next chapter">Episode Objects</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Max Mazzocchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/parsers/parsers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

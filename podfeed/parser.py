@@ -55,15 +55,19 @@ class Episode:
         self.write(outfile)
 
   def getLink(self):
+    ''' Return the link for this episode '''
     return self.link
 
   def getTitle(self):
+    ''' Return the title for this episode '''
     return self.title
 
   def getDate(self):
+    ''' Retrurn the publish date for this episode '''
     return self.date
 
   def getExt(self):
+    ''' Return the extension for this episode (ex: mp3) '''
     return self.ext
 
 class StandardFeedParser:

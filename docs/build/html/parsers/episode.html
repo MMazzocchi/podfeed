@@ -1,0 +1,167 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Episode Objects &#8212; podfeed 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Playlists" href="../playlists/playlists.html" />
+    <link rel="prev" title="The Standard Parser" href="standard.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="episode-objects">
+<h1>Episode Objects<a class="headerlink" href="#episode-objects" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">Episode</span></code> objects represent a single episode parsed from an RSS feed. They do
+not contain an actual audio file; rather, they contain a link to the file
+itself. An <code class="docutils literal notranslate"><span class="pre">Episode</span></code> can be downloaded using its member methods, or
+placed into a playlist: <a class="reference internal" href="../playlists/playlists.html"><span class="doc">Playlists</span></a></p>
+<dl class="class">
+<dt id="podfeed.parser.Episode">
+<em class="property">class </em><code class="descclassname">podfeed.parser.</code><code class="descname">Episode</code><span class="sig-paren">(</span><em>title</em>, <em>date</em>, <em>link</em><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a single entry in the RSS feed containing a link.</p>
+<dl class="method">
+<dt id="podfeed.parser.Episode.download">
+<code class="descname">download</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download this episode and return it as a request object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="podfeed.parser.Episode.getDate">
+<code class="descname">getDate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode.getDate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrurn the publish date for this episode</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="podfeed.parser.Episode.getExt">
+<code class="descname">getExt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode.getExt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the extension for this episode (ex: mp3)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="podfeed.parser.Episode.getLink">
+<code class="descname">getLink</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode.getLink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the link for this episode</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="podfeed.parser.Episode.getTitle">
+<code class="descname">getTitle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode.getTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the title for this episode</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="podfeed.parser.Episode.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>file_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download this episode and write it to the specified object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="podfeed.parser.Episode.writeFile">
+<code class="descname">writeFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#podfeed.parser.Episode.writeFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download this episode and write it to the specified filename</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">podfeed</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usage/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard.html">The Standard Parser</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Episode Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../playlists/playlists.html">Playlists</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="standard.html" title="previous chapter">The Standard Parser</a></li>
+      <li>Next: <a href="../playlists/playlists.html" title="next chapter">Playlists</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Max Mazzocchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/parsers/episode.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
