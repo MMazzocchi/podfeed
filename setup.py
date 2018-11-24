@@ -14,9 +14,12 @@ setuptools.setup(
   url="https://github.com/mmazzocchi/podfeed",
   packages=setuptools.find_packages(exclude=["test", "docs"]),
   classifiers=[
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Multimedia :: Sound/Audio",
   ],
   keywords="podcast RSS feed parser",
   install_requires=["feedparser"],
