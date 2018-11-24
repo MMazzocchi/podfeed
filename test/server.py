@@ -1,10 +1,14 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from threading import Thread
 
+class Handler(SimpleHTTPRequestHandler):
+  def log_request(code="-", size="-"):
+    pass
+
 class Server:
   def __init__(self, port):
     server_address = ('', port)
-    self.httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
+    self.httpd = HTTPServer(server_address, Handler)
 
   def run(self):
     self.httpd.serve_forever()
