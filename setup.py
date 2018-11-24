@@ -19,4 +19,6 @@ setuptools.setup(
     "Operating System :: OS Independent",
   ],
   keywords="podcast RSS feed parser",
+  install_requires=["feedparser"],
+  python_requires=">=3",
 )
