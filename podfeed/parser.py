@@ -93,7 +93,7 @@ class StandardFeedParser:
       entries = data['entries']
 
       for entry in entries:
-        if isNewEntry(entry, date):
+        if (date == None) or (isNewEntry(entry, date)):
           try:
             episode = self.makeEpisode(title, entry)            
             episodes.append(episode)
