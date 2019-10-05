@@ -7,7 +7,7 @@ import re
 from logging import getLogger
 LOGGER = getLogger('podfeed')
 
-TRACK_REGEX = re.compile(r'^.*\.(mp3|wav|aif.?|flac|ogg|wma)$')
+TRACK_REGEX = re.compile(r'^.*\.(mp3|wav|aif.?|flac|ogg|wma|m4a|aac)$')
 
 def validTrackLink(link):
   ''' Return true if the link appears to be a valid link. '''
